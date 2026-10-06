@@ -6,88 +6,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavan's Links & Projects</title>
     <!-- FontAwesome for Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.65);
+            --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #38bdf8;
-            --accent-hover: #0284c7;
+            --accent-glow: rgba(56, 189, 248, 0.35);
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            --card-hover-bg: rgba(30, 41, 59, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 3rem 1rem;
+            padding: 3.5rem 1rem 5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Live Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Background Animated Glow Orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+            animation: floatOrb 18s ease-in-out infinite alternate;
+        }
+
+        .glow-orb-1 {
+            width: 380px;
+            height: 380px;
+            background: #0284c7;
+            top: -50px;
+            left: 10%;
+            animation-duration: 14s;
+        }
+
+        .glow-orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #7c3aed;
+            bottom: -100px;
+            right: 10%;
+            animation-duration: 20s;
+        }
+
+        .glow-orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #06b6d4;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 16s;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(40px, -50px) scale(1.15);
+            }
+            100% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
+            z-index: 1;
         }
 
+        /* Header Animation & Styling */
         .header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.8rem;
+            animation: fadeInDown 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.2rem;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #ffffff;
+            box-shadow: 0 0 25px var(--accent-glow);
+            transition: transform 0.4s ease;
+        }
+
+        .avatar-container:hover .avatar {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px dashed rgba(56, 189, 248, 0.4);
+            animation: spinRing 25s linear infinite;
+        }
+
+        @keyframes spinRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .header h1 {
             margin: 0;
-            font-size: 2.2rem;
-            color: var(--text-main);
-            letter-spacing: 0.5px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .header p {
             color: var(--accent);
-            font-weight: 500;
-            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-top: 0.4rem;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
         }
 
         .section-title {
-            font-size: 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 2rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #334155;
+            letter-spacing: 1.5px;
+            margin: 2.2rem 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            animation: fadeIn 1s ease forwards;
         }
 
+        .section-title i {
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        /* Glassmorphism Link Buttons */
         .link-btn {
             display: flex;
             align-items: center;
-            background-color: var(--card-bg);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: var(--text-main);
             text-decoration: none;
-            padding: 1.2rem;
+            padding: 1.15rem 1.3rem;
             margin-bottom: 1rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.06),
+                transparent
+            );
+            transition: 0.6s;
+        }
+
+        .link-btn:hover::before {
+            left: 100%;
         }
 
         .link-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-            background-color: #26354a;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px) scale(1.015);
+            background: var(--card-hover-bg);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-glow);
+        }
+
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.2rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: all 0.35s ease;
+        }
+
+        .link-btn:hover .icon-wrapper {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            transform: rotate(-6deg) scale(1.08);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .link-btn i {
-            font-size: 1.8rem;
-            margin-right: 1.2rem;
+            font-size: 1.4rem;
             color: var(--accent);
-            width: 30px;
-            text-align: center;
+            transition: color 0.35s ease;
+        }
+
+        .link-btn:hover i {
+            color: #ffffff;
         }
 
         .link-text {
@@ -95,105 +296,400 @@
         }
 
         .link-title {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.08rem;
             margin: 0;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .link-title i.arrow-icon {
+            font-size: 0.85rem;
+            opacity: 0.4;
+            transform: translateX(-5px);
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .link-btn:hover .link-title i.arrow-icon {
+            opacity: 1;
+            transform: translateX(0);
+            color: var(--accent);
         }
 
         .link-desc {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin: 0.35rem 0 0 0;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        /* Staggered Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animation delays for buttons */
+        .link-btn:nth-child(1) { animation-delay: 0.1s; }
+        .link-btn:nth-child(2) { animation-delay: 0.15s; }
+        .link-btn:nth-child(3) { animation-delay: 0.2s; }
+        .link-btn:nth-child(4) { animation-delay: 0.25s; }
+        .link-btn:nth-child(5) { animation-delay: 0.3s; }
+        .link-btn:nth-child(6) { animation-delay: 0.35s; }
+        .link-btn:nth-child(7) { animation-delay: 0.4s; }
+        .link-btn:nth-child(8) { animation-delay: 0.45s; }
+        .link-btn:nth-child(9) { animation-delay: 0.5s; }
+        .link-btn:nth-child(10) { animation-delay: 0.55s; }
+        .link-btn:nth-child(11) { animation-delay: 0.6s; }
+        .link-btn:nth-child(12) { animation-delay: 0.65s; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3.5rem;
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin: 0.3rem 0 0 0;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        .footer p {
+            margin: 0;
+            opacity: 0.8;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Interactive Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Glowing Ambient Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
     <div class="container">
         <!-- Header Section -->
         <div class="header">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <div class="avatar">
+                    <i class="fas fa-terminal"></i>
+                </div>
+            </div>
             <h1>Pavan</h1>
-            <p>IoT Developer & Programmer</p>
+            <p><span class="badge-dot"></span> IoT Developer & Programmer</p>
         </div>
 
         <!-- Developer Profile -->
-        <div class="section-title">Developer Profile</div>
+        <div class="section-title">
+            <i class="fas fa-user"></i> Developer Profile
+        </div>
         <a href="https://github.com/Pavan-M-S" target="_blank" class="link-btn">
-            <i class="fab fa-github"></i>
+            <div class="icon-wrapper">
+                <i class="fab fa-github"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">GitHub Repository</p>
+                <p class="link-title">GitHub Repository <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">View my source code and projects</p>
             </div>
         </a>
 
         <!-- Live Web Projects -->
-        <div class="section-title">Live Projects</div>
+        <div class="section-title">
+            <i class="fas fa-rocket"></i> Live Projects
+        </div>
+
+        <a href="https://github-shame-engine.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-fire-flame-curved"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">GitHub Shame Engine <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">AI Code Roaster & Ego Destroyer</p>
+            </div>
+        </a>
+
+        <a href="https://vayu-os.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-desktop"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">Vayu OS <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">Web-based desktop operating system environment</p>
+            </div>
+        </a>
+
+        <a href="https://mainframe-lilac.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-server"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">Mainframe <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">Futuristic mainframe interface system</p>
+            </div>
+        </a>
+
+        <a href="https://space-voyage-bice.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-user-astronaut"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">Space Voyage <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">Planet jumping & space exploration game</p>
+            </div>
+        </a>
+
+        <a href="https://social-media-roaster-web.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">Social Media Roaster <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">ROASTVERSE 🔥 social media profile roast machine</p>
+            </div>
+        </a>
+
+        <a href="https://diy-grid-builder.vercel.app/" target="_blank" class="link-btn">
+            <div class="icon-wrapper">
+                <i class="fas fa-solar-panel"></i>
+            </div>
+            <div class="link-text">
+                <p class="link-title">DIY-Grid Builder <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
+                <p class="link-desc">Solar microgrid circuit builder simulator</p>
+            </div>
+        </a>
 
         <a href="https://hydro-trace-iot-project.vercel.app" target="_blank" class="link-btn">
-            <i class="fas fa-tint"></i>
+            <div class="icon-wrapper">
+                <i class="fas fa-tint"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">Hydro Trace IoT</p>
+                <p class="link-title">Hydro Trace IoT <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Water tracking & management system</p>
             </div>
         </a>
 
         <a href="https://eco-matrix-iot-project.vercel.app" target="_blank" class="link-btn">
-            <i class="fas fa-leaf"></i>
+            <div class="icon-wrapper">
+                <i class="fas fa-leaf"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">Eco Matrix IoT</p>
+                <p class="link-title">Eco Matrix IoT <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Environmental monitoring project</p>
             </div>
         </a>
+
         <a href="https://subsync-subtitle-syncer.vercel.app/" target="_blank" class="link-btn">
-            <i class="fa-solid fa-closed-captioning"></i>
+            <div class="icon-wrapper">
+                <i class="fas fa-closed-captioning"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">SubSync</p>
+                <p class="link-title">SubSync <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Subtitle Syncer for videos</p>
             </div>
         </a>
 
         <a href="https://ott-finder31.vercel.app/" target="_blank" class="link-btn">
-            <i class="fas fa-film"></i>
+            <div class="icon-wrapper">
+                <i class="fas fa-film"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">OTT Finder</p>
+                <p class="link-title">OTT Finder <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Find where to stream your favorite movies</p>
             </div>
         </a>
 
         <!-- Shared Files / Cloud -->
-        <div class="section-title">Shared Files & Resources</div>
+        <div class="section-title">
+            <i class="fas fa-folder-open"></i> Shared Files & Resources
+        </div>
 
-        <!-- Note: You can change the "Folder X" text to the actual names of your folders -->
         <a href="https://drive.google.com/drive/folders/1IbBiO-CtdqALmoBeSywQx3tWxoci2hld?usp=drive_link"
             target="_blank" class="link-btn">
-            <i class="fab fa-google-drive"></i>
+            <div class="icon-wrapper">
+                <i class="fab fa-google-drive"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">Project Assets & Files (Folder 1)</p>
+                <p class="link-title">Project Assets & Files (Folder 1) <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Google Drive Link</p>
             </div>
         </a>
 
         <a href="https://drive.google.com/drive/folders/1gG9yU1iYb_wFDtQTrDN7aqXzm2ov_tmv?usp=sharing" target="_blank"
             class="link-btn">
-            <i class="fab fa-google-drive"></i>
+            <div class="icon-wrapper">
+                <i class="fab fa-google-drive"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">Project Assets & Files (Folder 2)</p>
+                <p class="link-title">Project Assets & Files (Folder 2) <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Google Drive Link</p>
             </div>
         </a>
 
         <a href="https://drive.google.com/drive/folders/1aMpj6gGf3V4k1Ex-jLmQaxIQa3epq9Cz?usp=sharing" target="_blank"
             class="link-btn">
-            <i class="fab fa-google-drive"></i>
+            <div class="icon-wrapper">
+                <i class="fab fa-google-drive"></i>
+            </div>
             <div class="link-text">
-                <p class="link-title">Project Assets & Files (Folder 3)</p>
+                <p class="link-title">Project Assets & Files (Folder 3) <i class="fas fa-arrow-up-right-from-square arrow-icon"></i></p>
                 <p class="link-desc">Google Drive Link</p>
             </div>
         </a>
 
+        <div class="footer">
+            <p>© <span id="year"></span> Pavan M S. All rights reserved.</p>
+        </div>
     </div>
 
+    <!-- Live Interactive Particle Background Script -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // Mouse interaction
+        const mouse = {
+            x: null,
+            y: null,
+            radius: 140
+        };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 2 + 0.8;
+                this.vx = (Math.random() - 0.5) * 0.7;
+                this.vy = (Math.random() - 0.5) * 0.7;
+                this.color = `rgba(56, 189, 248, ${Math.random() * 0.4 + 0.3})`;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(56, 189, 248, 0.5)';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse interactivity
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= Math.cos(angle) * force * 2;
+                        this.y -= Math.sin(angle) * force * 2;
+                    }
+                }
+            }
+        }
+
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(Math.floor((width * height) / 10000), 70);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        const opacity = (1 - distance / 120) * 0.25;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+    </script>
 </body>
 
 </html>
